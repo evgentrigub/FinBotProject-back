@@ -1,0 +1,2 @@
+Bollinger@MyNewBotBollinger@Prime@False
+MovingAverage@MyNewBotMoving@Prime@False

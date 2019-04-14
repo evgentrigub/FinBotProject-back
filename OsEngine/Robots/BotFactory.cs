@@ -24,6 +24,8 @@ namespace OsEngine.Robots
         {
             List<string> result = new List<string>();
 
+            //добавляем робота в список
+            result.Add("Arbitrage");
             result.Add("MarketMakerBot");
             result.Add("PatternTrader");
             result.Add("HighFrequencyTrader");
@@ -52,6 +54,12 @@ namespace OsEngine.Robots
         {
             BotPanel bot = null;
             // примеры и бесплатные боты
+
+            // если выбираем робота с именем Arbitrage, то создаем класс нашего робота
+            if (nameClass == "Arbitrage")
+            {
+                bot = new ArbitrageBot(name, startProgram);
+            }
 
             if (nameClass == "ClusterCountertrend")
             {

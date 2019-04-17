@@ -1,6 +1,9 @@
 ﻿using System;
 namespace WebApi.Interfaces
 {
+    /// <summary>
+    /// Базовые свойства присущие всем объектам
+    /// </summary>
     public interface IModelBase<TId>
     {
         ///<summary> Идентификатор </summary>

@@ -9,10 +9,11 @@ namespace WebApi.Interfaces
         IStorage<T> GetStore<T>()
             where T : class;
         int SaveChanges();
+
     }
 
     public interface IStorage<T>
-        where T : class
+        where T: class
     {
         T Add(T model);
         IQueryable<T> Where(Expression<Func<T, bool>> e);

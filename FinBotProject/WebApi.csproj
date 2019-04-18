@@ -10,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Entities\EmptyStruct.cs" />
+    <Compile Remove="Entities\IStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />

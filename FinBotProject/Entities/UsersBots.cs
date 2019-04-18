@@ -1,10 +1,11 @@
 ﻿using System;
+using WebApi.Interfaces;
+
 namespace WebApi.Entities
 {
-    public class UsersBots
+    public class UsersBots : ModelBase, IUsersBots
     {
-        public UsersBots()
-        {
-        }
+        public virtual User User { get; set; }
+        public virtual TradingBot TradingBot { get; set; }
     }
 }

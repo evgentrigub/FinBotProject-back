@@ -513,12 +513,6 @@ C:\Users\evgen\Desktop\Programming\Projects\FinBots\OsEngine-master\project\OsEn
 C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\OsEngine.exe.config
 C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\OsEngine.exe
 C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\OsEngine.pdb
-C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\System.Buffers.dll
-C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\Newtonsoft.Json.xml
-C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\PusherClient.dll.config
-C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\QuikSharp.xml
-C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\QuikSharp.dll.config
-C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\RestSharp.xml
 C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\bin\Debug\Interop.SmartCOM4Lib.dll
 C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\obj\Debug\OsEngine.csprojAssemblyReference.cache
 C:\Users\evgen\Desktop\Programming\Projects\FinBots\FinBotProject-back\OsEngine\obj\Debug\Interop.SmartCOM4Lib.dll

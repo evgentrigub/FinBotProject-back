@@ -15,9 +15,55 @@ namespace WebApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("WebApi.Entities.Strategy", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("StrategyOSEngine");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Strategy");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.TradingBot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Name");
+
+                    b.Property<Guid?>("StrategyId");
+
+                    b.Property<int>("TimeFrame");
+
+                    b.Property<string>("Type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StrategyId");
+
+                    b.ToTable("TradingBots");
+                });
 
             modelBuilder.Entity("WebApi.Entities.User", b =>
                 {
@@ -38,6 +84,46 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.UsersBots", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<Guid?>("TradingBotId");
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TradingBotId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UsersBots");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.TradingBot", b =>
+                {
+                    b.HasOne("WebApi.Entities.Strategy", "Strategy")
+                        .WithMany()
+                        .HasForeignKey("StrategyId");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.UsersBots", b =>
+                {
+                    b.HasOne("WebApi.Entities.TradingBot", "TradingBot")
+                        .WithMany()
+                        .HasForeignKey("TradingBotId");
+
+                    b.HasOne("WebApi.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

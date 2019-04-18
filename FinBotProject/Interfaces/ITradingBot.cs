@@ -1,4 +1,5 @@
 ﻿using System;
+using WebApi.Entities;
 using WebApi.Interfaces.Enums;
 
 namespace WebApi.Interfaces
@@ -14,6 +15,6 @@ namespace WebApi.Interfaces
         ///<summary> Идентификатор торгового горизонта</summary>
         TimeFrame TimeFrame { get; set; }
         ///<summary> Идентификатор стратегии</summary>
-        IStrategy Strategy { get; set; }
+        Strategy Strategy { get; set; }
     }
 }

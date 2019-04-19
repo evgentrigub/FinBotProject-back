@@ -10,7 +10,7 @@ using WebApi.Helpers;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class RobotsController : ControllerBase
     {
@@ -27,8 +27,29 @@ namespace WebApi.Controllers
         [HttpGet]
         public IEnumerable<TradingBot> GetAllRobots()
         {
-            var tradingsBots = _context.TradingBots.ToList();
-            return tradingsBots;
+            try
+            {
+                var tradingsBots = _context.TradingBots.ToList();
+                return tradingsBots;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public IEnumerable<TradingBot> GetUserRobots(int id)
+        {
+            try
+            {
+                var tradingsBots = _context.UsersBots.Where(r => r.User.Id == id).Select(r => r.TradingBot).ToList();
+                return tradingsBots;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

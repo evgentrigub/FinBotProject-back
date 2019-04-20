@@ -15,7 +15,7 @@ using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UsersController : ControllerBase
@@ -101,6 +101,13 @@ namespace WebApi.Controllers
             var user =  _userService.GetById(id);
             var userDto = _mapper.Map<UserDto>(user);
             return Ok(userDto);
+        }
+
+        [HttpGet("stat/{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            var user = _userService.GetById(id);
+            return Ok(user);
         }
 
         [HttpPut("{id}")]

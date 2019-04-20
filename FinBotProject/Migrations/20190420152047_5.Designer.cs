@@ -3,39 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Helpers;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190420152047_5")]
+    partial class _5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("WebApi.Entities.Answers", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AnswerRate");
-
-                    b.Property<string>("Content");
-
-                    b.Property<Guid?>("QuestionsId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionsId");
-
-                    b.ToTable("Answers");
-                });
 
             modelBuilder.Entity("WebApi.Entities.Questions", b =>
                 {
@@ -152,11 +136,22 @@ namespace WebApi.Migrations
                     b.ToTable("UsersBots");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Answers", b =>
+            modelBuilder.Entity("WebApi.Interfaces.Answers", b =>
                 {
-                    b.HasOne("WebApi.Entities.Questions")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionsId");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AnswerRate");
+
+                    b.Property<string>("Content");
+
+                    b.Property<Guid?>("QuestionsId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionsId");
+
+                    b.ToTable("Answers");
                 });
 
             modelBuilder.Entity("WebApi.Entities.TradingBot", b =>
@@ -175,6 +170,13 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Entities.User", "User")
                         .WithMany("UsersBots")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("WebApi.Interfaces.Answers", b =>
+                {
+                    b.HasOne("WebApi.Entities.Questions")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionsId");
                 });
 #pragma warning restore 612, 618
         }

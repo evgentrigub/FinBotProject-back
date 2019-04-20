@@ -17,5 +17,10 @@
     <Folder Include="Interfaces\Enums\" />
     <Folder Include="Services\Repositories\" />
     <Folder Include="Services\Base\" />
+    <Folder Include="Entities\ModelViews\" />
+    <Folder Include="Interfaces\IViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Controllers\TaskController.cshtml" />
   </ItemGroup>
 </Project>

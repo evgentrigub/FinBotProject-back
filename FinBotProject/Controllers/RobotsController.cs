@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Entities;
+using WebApi.Entities.ModelViews;
 using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Interfaces.IViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,7 +28,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TradingBot> GetAllRobots()
+        public IEnumerable<ITradibgBot> GetAllRobots()
         {
             try
             {
@@ -39,11 +42,21 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TradingBot> GetUserRobots(int id)
+        public IEnumerable<ITradingBotViewModel> GetUserRobots(int id)
         {
             try
             {
-                var tradingsBots = _context.UsersBots.Where(r => r.User.Id == id).Select(r => r.TradingBot).ToList();
+                var tradingsBots = _context.UsersBots.Where(r => r.User.Id == id).Select(r =>  new TradingBotViewModel 
+                { 
+                    Name = r.TradingBot.Name,
+                    Type = r.TradingBot.Type,
+                    FinancialInstrument = r.TradingBot.FinancialInstrument,
+                    TimeFrame = r.TradingBot.TimeFrame,
+                    Strategy_name = r.TradingBot.Strategy.Name,
+                    Profit = r.TradingBot.Profit,
+                    WorkedTime =(DateTime.Now - r.CreatedDate).Days,
+                }).ToList();
+
                 return tradingsBots;
             }
             catch (Exception ex)

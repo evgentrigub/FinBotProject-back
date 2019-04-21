@@ -93,6 +93,7 @@ namespace WebApi.Services
             user.FirstName = userParam.FirstName;
             user.LastName = userParam.LastName;
             user.Username = userParam.Username;
+            user.Account = userParam.Account;
 
             // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))

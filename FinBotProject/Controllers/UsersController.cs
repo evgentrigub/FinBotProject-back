@@ -47,7 +47,7 @@ namespace WebApi.Controllers
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[] 
+                Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
@@ -74,15 +74,32 @@ namespace WebApi.Controllers
             // map dto to entity
             var user = _mapper.Map<User>(userDto);
 
-            try 
+            try
             {
                 // save 
                 _userService.Create(user, userDto.Password);
                 return Ok();
-            } 
-            catch(AppException ex)
+            }
+            catch (AppException ex)
             {
                 // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPut("addMoney/{id}")]
+        public IActionResult AddMoneyToAccount(int id, [FromBody]User user)
+        {
+            try
+            {
+                var userDb = _userService.GetById(id);
+                userDb.Account = user.Account;
+                //save
+                _userService.Update(userDb, null);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -90,7 +107,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users =  _userService.GetAll();
+            var users = _userService.GetAll();
             var userDtos = _mapper.Map<IList<UserDto>>(users);
             return Ok(userDtos);
         }
@@ -98,11 +115,12 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var user =  _userService.GetById(id);
+            var user = _userService.GetById(id);
             var userDto = _mapper.Map<UserDto>(user);
             return Ok(userDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("stat/{id}")]
         public IActionResult GetUserById(int id)
         {
@@ -117,13 +135,13 @@ namespace WebApi.Controllers
             var user = _mapper.Map<User>(userDto);
             user.Id = id;
 
-            try 
+            try
             {
                 // save 
                 _userService.Update(user, userDto.Password);
                 return Ok();
-            } 
-            catch(AppException ex)
+            }
+            catch (AppException ex)
             {
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });

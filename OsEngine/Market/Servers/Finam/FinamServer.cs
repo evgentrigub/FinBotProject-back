@@ -368,13 +368,13 @@ namespace OsEngine.Market.Servers.Finam
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
 
-            string Host = "http://mwg.corp.ingos.ru:9090";
-            Uri newUri = new Uri(Host);
-            IWebProxy proxy = new WebProxy(newUri);
+            //string Host = "http://mwg.corp.ingos.ru:9090";
+            //Uri newUri = new Uri(Host);
+            //IWebProxy proxy = new WebProxy(newUri);
 
-            proxy.Credentials = new NetworkCredential(@"ingos\trigubov", "Pflybwf97@");
+            //proxy.Credentials = new NetworkCredential(@"ingos\trigubov", "Pflybwf97#");
 
-            request.Proxy = proxy;
+            //request.Proxy = proxy;
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -2083,13 +2083,13 @@ namespace OsEngine.Market.Servers.Finam
 
             WebClient wb = new WebClient();
 
-            string Host = "http://mwg.corp.ingos.ru:9090";
-            Uri newUri = new Uri(Host);
-            IWebProxy proxy = new WebProxy(newUri);
+            //string Host = "http://mwg.corp.ingos.ru:9090";
+            //Uri newUri = new Uri(Host);
+            //IWebProxy proxy = new WebProxy(newUri);
 
-            proxy.Credentials = new NetworkCredential(@"ingos\trigubov", "Pflybwf97@");
+            //proxy.Credentials = new NetworkCredential(@"ingos\trigubov", "Pflybwf97@");
 
-            wb.Proxy = proxy;
+            //wb.Proxy = proxy;
 
             string response = wb.DownloadString(url);
 

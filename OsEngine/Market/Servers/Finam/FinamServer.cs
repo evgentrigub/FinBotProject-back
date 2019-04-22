@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
@@ -366,6 +367,14 @@ namespace OsEngine.Market.Servers.Finam
             }
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+
+            string Host = "http://mwg.corp.ingos.ru:9090";
+            Uri newUri = new Uri(Host);
+            IWebProxy proxy = new WebProxy(newUri);
+
+            proxy.Credentials = new NetworkCredential(@"ingos\trigubov", "Pflybwf97@");
+
+            request.Proxy = proxy;
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -2073,6 +2082,14 @@ namespace OsEngine.Market.Servers.Finam
             url += "at=" + "0";
 
             WebClient wb = new WebClient();
+
+            string Host = "http://mwg.corp.ingos.ru:9090";
+            Uri newUri = new Uri(Host);
+            IWebProxy proxy = new WebProxy(newUri);
+
+            proxy.Credentials = new NetworkCredential(@"ingos\trigubov", "Pflybwf97@");
+
+            wb.Proxy = proxy;
 
             string response = wb.DownloadString(url);
 

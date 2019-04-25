@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "FinBotProject\WebApi.csproj", "{BD6B77DF-8A2A-4505-AD5A-6BA51AFBA0D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D5B52FC8-875D-4CBF-886B-B71F8D556341} = {D5B52FC8-875D-4CBF-886B-B71F8D556341}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsEngine", "OsEngine\OsEngine.csproj", "{D5B52FC8-875D-4CBF-886B-B71F8D556341}"
 EndProject

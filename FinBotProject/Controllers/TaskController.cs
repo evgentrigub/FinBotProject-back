@@ -21,28 +21,20 @@ namespace WebApi.Controllers
             _context = context;
         }
 
-        //[HttpGet]
-        //public IEnumerable<Questions> GetQuestions()
-        //{
-        //    try
-        //    {
-        //        var answers = _context.Answers.Select(r => new Answers 
-        //        {
-        //            Content = r.Content,
-        //            AnswerRate = r.AnswerRate
-        //        })
-
-        //        var questions = _context.Questions
-        //            .SelectMany(r => new Answers {Content = r.Answers.Content}).ToList();
-
-
-        //        return questions;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
+       
+        public IEnumerable<Questions> GetQuestions()
+        {
+            try
+            {
+                var questions = _context.Questions.Select(r => new Questions { Answers = r.Answers, ObjContent = r.ObjContent })
+                    .ToList();
+                return questions;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         // GET: api/values
         //[HttpGet]
         //public IEnumerable<string> Get()

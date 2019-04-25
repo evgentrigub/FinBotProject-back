@@ -41,28 +41,28 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public IEnumerable<ITradingBotViewModel> GetUserRobots(int id)
-        {
-            try
-            {
-                var tradingsBots = _context.UsersBots.Where(r => r.User.Id == id).Select(r =>  new TradingBotViewModel 
-                { 
-                    Name = r.TradingBot.Name,
-                    Type = r.TradingBot.Type,
-                    FinancialInstrument = r.TradingBot.FinancialInstrument,
-                    TimeFrame = r.TradingBot.TimeFrame,
-                    Strategy_name = r.TradingBot.Strategy.Name,
-                    Profit = r.TradingBot.Profit,
-                    WorkedTime =(DateTime.Now - r.CreatedDate).Days,
-                }).ToList();
+        //[HttpGet]
+        //public IEnumerable<ITradingBotViewModel> GetUserRobots(int id)
+        //{
+        //    try
+        //    {
+        //        var tradingsBots = _context.Tra.Where(r => r.User.Id == id).Select(r =>  new TradingBotViewModel 
+        //        { 
+        //            Name = r.TradingBot.Name,
+        //            Type = r.TradingBot.Type,
+        //            FinancialInstrument = r.TradingBot.FinancialInstrument,
+        //            TimeFrame = r.TradingBot.TimeFrame,
+        //            Strategy_name = r.TradingBot.Strategy.Name,
+        //            Profit = r.TradingBot.Profit,
+        //            WorkedTime =(DateTime.Now - r.CreatedDate).Days,
+        //        }).ToList();
 
-                return tradingsBots;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        //        return tradingsBots;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
     }
 }

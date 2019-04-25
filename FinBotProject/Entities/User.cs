@@ -18,9 +18,9 @@ namespace WebApi.Entities
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
-        public ICollection<UsersBots> UsersBots { get; set; }
+        public virtual ICollection<TradingBot> TradingBots { get; set; }
         [NotMapped]
         /// <summary>  Количество запущенных роботов у пользователя </summary>
-        public int RobotsQuantity => UsersBots.Count(r => r.IsActive);
+        public int RobotsQuantity => TradingBots.Count(r => r.IsActive);
     }
 }

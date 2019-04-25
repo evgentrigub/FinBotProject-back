@@ -15,7 +15,7 @@ using WebApi.Entities;
 
 namespace WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UsersController : ControllerBase
@@ -87,15 +87,13 @@ namespace WebApi.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPut("addMoney/{id}")]
-        public IActionResult AddMoneyToAccount(int id, [FromBody]User user)
+        public IActionResult AddMoneyToAccount(User user)
         {
             try
             {
-                var userDb = _userService.GetById(id);
-                userDb.Account = user.Account;
-                //save
-                _userService.Update(userDb, null);
+                _userService.UpdateAccount(user);
                 return Ok();
             }
             catch (AppException ex)
@@ -112,6 +110,7 @@ namespace WebApi.Controllers
             return Ok(userDtos);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -120,13 +119,12 @@ namespace WebApi.Controllers
             return Ok(userDto);
         }
 
-        [AllowAnonymous]
-        [HttpGet("stat/{id}")]
-        public IActionResult GetUserById(int id)
-        {
-            var user = _userService.GetById(id);
-            return Ok(user);
-        }
+        //[HttpGet("stat/{id}")]
+        //public IActionResult GetUserById(int id)
+        //{
+        //    var user = _userService.GetById(id);
+        //    return Ok(user);
+        //}
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]UserDto userDto)

@@ -12,6 +12,7 @@ namespace WebApi.Services
         IEnumerable<User> GetAll();
         User GetById(int id);
         User Create(User user, string password);
+        User UpdateAccount(User user);
         void Update(User user, string password = null);
         void Delete(int id);
     }
@@ -93,7 +94,6 @@ namespace WebApi.Services
             user.FirstName = userParam.FirstName;
             user.LastName = userParam.LastName;
             user.Username = userParam.Username;
-            user.Account = userParam.Account;
 
             // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))
@@ -117,6 +117,25 @@ namespace WebApi.Services
                 _context.Users.Remove(user);
                 _context.SaveChanges();
             }
+        }
+
+        public User UpdateAccount(User user)
+        {
+            try
+            {
+                var currentUser = _context.Users.Where(r => r.Id == user.Id).SingleOrDefault();
+                //if (currentUser == null) return;
+                currentUser.Account = currentUser.Account + user.Account;
+                _context.Users.Update(currentUser);
+                _context.SaveChanges();
+                return (currentUser);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+
         }
 
         // private helper methods
@@ -151,5 +170,6 @@ namespace WebApi.Services
 
             return true;
         }
+
     }
 }

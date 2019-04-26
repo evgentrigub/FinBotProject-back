@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OsEngine.Journal;
+//using OsEngine.Journal;
 
 namespace WebApi.Controllers
 {
@@ -12,11 +12,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class JournalController : ControllerBase
     {
-        private readonly JournalUi journalUi;
-        JournalController()
-        {
-            
-        }
+        //private readonly JournalUi journalUi;
         // GET: api/Journal
         [HttpGet]
         public IEnumerable<string> Get()

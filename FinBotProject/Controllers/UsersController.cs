@@ -119,12 +119,13 @@ namespace WebApi.Controllers
             return Ok(userDto);
         }
 
-        //[HttpGet("stat/{id}")]
-        //public IActionResult GetUserById(int id)
-        //{
-        //    var user = _userService.GetById(id);
-        //    return Ok(user);
-        //}
+        [AllowAnonymous]
+        [HttpGet("stat/{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            var user = _userService.GetById(id);
+            return Ok(user);
+        }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]UserDto userDto)

@@ -52,6 +52,7 @@ namespace WebApi.Controllers
                 var user = _context.Users.Where(r => r.Id == id).Include(a => a.TradingBots).SingleOrDefault();
                 var tradingBots = user.TradingBots.Select(r => new TradingBotViewModel
                 {
+                    Id = r.Id,
                     Name = r.Name,
                     Type = r.Type,
                     FinancialInstrument = r.FinancialInstrument,

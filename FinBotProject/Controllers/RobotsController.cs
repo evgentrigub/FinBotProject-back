@@ -67,5 +67,19 @@ namespace WebApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
+        /** Метод редактирования роботов пользователем */
+        [HttpPost]
+        public void UpdateBot (TradingBot bot)
+        {
+            var oldBot = _context.TradingBots.Where(r => r.IsActive && r.Id == bot.Id).SingleOrDefault();
+            if (oldBot == null)
+            {
+                throw new Exception("Bot not found");
+            };
+            oldBot.Name = bot.Name;
+            _context.TradingBots.Update(oldBot);
+            _context.SaveChanges();
+        }
     }
 }

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Entities.ModelViews;
 using WebApi.Helpers;
@@ -41,28 +43,29 @@ namespace WebApi.Controllers
             }
         }
 
-        //[HttpGet]
-        //public IEnumerable<ITradingBotViewModel> GetUserRobots(int id)
-        //{
-        //    try
-        //    {
-        //        var tradingsBots = _context.Tra.Where(r => r.User.Id == id).Select(r =>  new TradingBotViewModel 
-        //        { 
-        //            Name = r.TradingBot.Name,
-        //            Type = r.TradingBot.Type,
-        //            FinancialInstrument = r.TradingBot.FinancialInstrument,
-        //            TimeFrame = r.TradingBot.TimeFrame,
-        //            Strategy_name = r.TradingBot.Strategy.Name,
-        //            Profit = r.TradingBot.Profit,
-        //            WorkedTime =(DateTime.Now - r.CreatedDate).Days,
-        //        }).ToList();
-
-        //        return tradingsBots;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
+        /** Метод отображения роботов текущего пользователя */
+        [HttpGet]
+        public IEnumerable<ITradingBotViewModel> GetUserRobots(int id)
+        {
+            try
+            {
+                var user = _context.Users.Where(r => r.Id == id).Include(a => a.TradingBots).SingleOrDefault();
+                var tradingBots = user.TradingBots.Select(r => new TradingBotViewModel
+                {
+                    Name = r.Name,
+                    Type = r.Type,
+                    FinancialInstrument = r.FinancialInstrument,
+                    TimeFrame = r.TimeFrame,
+                    Strategy = r.Strategy?.Name,
+                    Profit = r.Profit,
+                    WorkedTime = (DateTime.Now - r.CreatedDate).Days,
+                });
+                return tradingBots;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

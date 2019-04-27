@@ -10,7 +10,7 @@ namespace WebApi.Entities.ModelViews
         public string Type { get; set; }
         public FinancialInstrument FinancialInstrument { get; set; }
         public TimeFrame TimeFrame { get; set; }
-        public string Strategy_name { get; set; }
+        public string Strategy { get; set; }
         public double Profit { get; set; }
         public int WorkedTime { get; set; }
     }

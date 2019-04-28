@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Interfaces.Enums;
 
 ///<summary> Контроллер для работы с тестом для определения типа трейдера </summary>
 
@@ -33,6 +34,40 @@ namespace WebApi.Controllers
                     quest.Answers = quest.Answers.OrderBy(r => r.AnswerRate).ToList();
                 }
                 return questions;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public RiskType GetInvestorType(int ball)
+        {
+            try
+            {
+                var type = RiskType.Moderate;
+                switch (ball) 
+                {
+                    case int n when ( n <= 71 ):
+                        type = RiskType.Guaranteed;
+                        return type;
+                    case int n when ( n > 71 && n <= 106):
+                        type = RiskType.Conservative;
+                        return type;
+                    case int n when (n > 106 && n <= 142):
+                        type = RiskType.Moderate;
+                        return type;
+                    case int n when (n > 142 && n <= 182):
+                        type = RiskType.Growth;
+                        return type;
+                    case int n when (n > 182 && n <= 221):
+                        type = RiskType.AggressiveGrowth;
+                        return type;
+                    case int n when (n >221):
+                        type = RiskType.MaximumGrowth;
+                        return type;
+                }
+                return type;
             }
             catch (Exception ex)
             {

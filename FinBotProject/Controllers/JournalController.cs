@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
-//using OsEngine.Journal;
 
 namespace WebApi.Controllers
 {
@@ -12,12 +8,15 @@ namespace WebApi.Controllers
     [ApiController]
     public class JournalController : ControllerBase
     {
-        //private readonly JournalUi journalUi;
         // GET: api/Journal
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            var curr = Directory.GetCurrentDirectory();
+            var path = Path.GetDirectoryName(curr)+"\\OsEngine\\bin\\Debug\\Result\\william_result.txt";
+            string readText = System.IO.File.ReadAllText(path);
+
+            return readText;
         }
 
         // GET: api/Journal/5

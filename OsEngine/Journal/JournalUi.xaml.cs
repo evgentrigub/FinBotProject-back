@@ -48,6 +48,8 @@ namespace OsEngine.Journal
         /// </summary>
         private List<BotPanelJournal> _botsJournals;
 
+        private object botTitle;
+
         /// <summary>
         /// constructor
         /// конструктор
@@ -398,6 +400,7 @@ namespace OsEngine.Journal
                 // добавление нового элемента
                 TabItem item = new TabItem() { Header = _botsJournals[i].BotName.ToString(), FontSize = 12 };
                 TabBots.Items.Add(item);
+                botTitle = item.Header;
             }
             TabBots.SelectionChanged += TabBotsSelectionChanged;
         }
@@ -586,6 +589,11 @@ namespace OsEngine.Journal
         private void PaintStatTable(List<Position> positionsAll, List<Position> positionsLong, List<Position> positionsShort, bool neadShowTickState)
         {
             List<string> positionsAllState = PositionStaticticGenerator.GetStatisticNew(positionsAll, neadShowTickState);
+
+            var path = Directory.GetCurrentDirectory() + "\\Result\\"+botTitle+"_result.txt";
+            File.WriteAllLines(path, positionsAllState);
+            Console.WriteLine("Сохранено в " + path);
+            
             List<string> positionsLongState = PositionStaticticGenerator.GetStatisticNew(positionsLong, neadShowTickState);
             List<string> positionsShortState = PositionStaticticGenerator.GetStatisticNew(positionsShort, neadShowTickState);
 
@@ -1404,6 +1412,7 @@ namespace OsEngine.Journal
         /// таблица закрытых позиций
         /// </summary>
         private DataGridView _closePositionGrid;
+
 
         /// <summary>
         /// create tables for positions

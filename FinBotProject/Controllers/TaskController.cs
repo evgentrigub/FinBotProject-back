@@ -28,6 +28,10 @@ namespace WebApi.Controllers
             {
                 var questions = _context.Questions.Select(r => new Questions { Answers = r.Answers, ObjContent = r.ObjContent })
                     .ToList();
+                foreach (Questions quest in questions)
+                {
+                    quest.Answers = quest.Answers.OrderBy(r => r.AnswerRate).ToList();
+                }
                 return questions;
             }
             catch (Exception ex)

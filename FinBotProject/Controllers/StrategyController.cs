@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 
@@ -29,7 +30,16 @@ namespace WebApi.Controllers
         {
             try
             {
-                var strategies = _context.Strategy.ToList();
+                var strategies = _context.Strategy.Select(r => new Strategy 
+                {   
+                    Id = r.Id,
+                    Name = r.Name,
+                    CreatedDate = r.CreatedDate,
+                    Description = r.Description,
+                    IsActive = r.IsActive,
+                    StrategyOSEngine = r.StrategyOSEngine,
+                    Profit = r.Profit 
+                }).ToList();
                 return strategies;
             }
             catch (Exception ex)

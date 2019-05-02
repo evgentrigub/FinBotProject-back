@@ -12,6 +12,8 @@
   <ItemGroup>
     <Compile Remove="Entities\EmptyStruct.cs" />
     <Compile Remove="Entities\IStorage.cs" />
+    <Compile Remove="Entities\UsersBots.cs" />
+    <Compile Remove="Interfaces\IUsersBots.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />

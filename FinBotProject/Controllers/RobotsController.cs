@@ -58,7 +58,11 @@ namespace WebApi.Controllers
                     FinancialInstrument = r.FinancialInstrument,
                     TimeFrame = r.TimeFrame,
                     Strategy = r.Strategy?.Name,
-                    Profit = r.Profit,
+                    Profit =  new Profit
+                    {
+                        Asset = r.Profit.Asset,
+                        Percentage = r.Profit.Percentage
+                    },
                     WorkedTime = (DateTime.Now - r.CreatedDate).Days,
                 });
                 return tradingBots;

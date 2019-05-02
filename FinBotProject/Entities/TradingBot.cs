@@ -12,6 +12,6 @@ namespace WebApi.Entities
         public virtual FinancialInstrument FinancialInstrument { get; set; }
         public virtual TimeFrame TimeFrame { get; set; }
         public virtual Strategy Strategy { get; set; }
-        public double Profit{ get; set; }
+        public virtual Profit Profit { get; set; }
     }
 }

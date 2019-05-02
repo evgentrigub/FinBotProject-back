@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using WebApi.Interfaces.Enums;
 
 namespace WebApi.Entities
 {
@@ -15,6 +16,9 @@ namespace WebApi.Entities
         public double Profit { get; set; }
         /// <summary> Денежная сумма на счету </summary>
         public double Account { get; set; }
+        /// <summary> Риск профиль пользователя /// </summary>
+        public RiskType RiskType { get;  set; }
+        /// <value>The password hash </value>
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 

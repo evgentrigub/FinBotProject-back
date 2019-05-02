@@ -37,7 +37,7 @@ namespace WebApi.Migrations
                     b.ToTable("Answers");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.ModelViews.Asset", b =>
+            modelBuilder.Entity("WebApi.Entities.Asset", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -50,33 +50,13 @@ namespace WebApi.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid?>("ProfitId");
+                    b.Property<Guid?>("TradingBotId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfitId");
+                    b.HasIndex("TradingBotId");
 
-                    b.ToTable("Asset");
-                });
-
-            modelBuilder.Entity("WebApi.Entities.Profit", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<double>("Percentage");
-
-                    b.Property<Guid?>("StrategyId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StrategyId");
-
-                    b.ToTable("Profit");
+                    b.ToTable("Assets");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Questions", b =>
@@ -130,7 +110,7 @@ namespace WebApi.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid?>("ProfitId");
+                    b.Property<double>("Profit");
 
                     b.Property<Guid?>("StrategyId");
 
@@ -141,8 +121,6 @@ namespace WebApi.Migrations
                     b.Property<int?>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfitId");
 
                     b.HasIndex("StrategyId");
 
@@ -187,26 +165,15 @@ namespace WebApi.Migrations
                         .HasForeignKey("QuestionsId");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.ModelViews.Asset", b =>
+            modelBuilder.Entity("WebApi.Entities.Asset", b =>
                 {
-                    b.HasOne("WebApi.Entities.Profit")
-                        .WithMany("Asset")
-                        .HasForeignKey("ProfitId");
-                });
-
-            modelBuilder.Entity("WebApi.Entities.Profit", b =>
-                {
-                    b.HasOne("WebApi.Entities.Strategy")
-                        .WithMany("Profit")
-                        .HasForeignKey("StrategyId");
+                    b.HasOne("WebApi.Entities.TradingBot")
+                        .WithMany("Assets")
+                        .HasForeignKey("TradingBotId");
                 });
 
             modelBuilder.Entity("WebApi.Entities.TradingBot", b =>
                 {
-                    b.HasOne("WebApi.Entities.Profit", "Profit")
-                        .WithMany()
-                        .HasForeignKey("ProfitId");
-
                     b.HasOne("WebApi.Entities.Strategy", "Strategy")
                         .WithMany()
                         .HasForeignKey("StrategyId");

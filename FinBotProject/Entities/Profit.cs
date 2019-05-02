@@ -11,9 +11,5 @@ namespace WebApi.Entities
         public virtual ICollection<Asset> Asset { get; set; }
         public double Percentage { get; set; }
 
-        public static implicit operator double(Profit v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

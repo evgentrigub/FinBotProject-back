@@ -1,3 +1,5 @@
+using WebApi.Interfaces.Enums;
+
 namespace WebApi.Dtos
 {
     public class UserDto
@@ -11,6 +13,9 @@ namespace WebApi.Dtos
         public double Profit { get; set; }
         /// <summary> Денежная сумма на счету </summary>
         public double Account { get; set; }
+        /// <summary> Тип инвестора </summary>
+        public RiskType RiskType { get; set; }
+        /// <value>The robots quantity.</value>
         public int RobotsQuantity { get; set; }
     }
 }

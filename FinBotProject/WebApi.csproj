@@ -14,6 +14,8 @@
     <Compile Remove="Entities\IStorage.cs" />
     <Compile Remove="Entities\UsersBots.cs" />
     <Compile Remove="Interfaces\IUsersBots.cs" />
+    <Compile Remove="Interfaces\IProfit.cs" />
+    <Compile Remove="Entities\Profit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />

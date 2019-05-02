@@ -14,7 +14,6 @@ namespace WebApi.Helpers
         public DbSet<TradingBot> TradingBots { get; set; }
         public DbSet<Questions> Questions { get; set; }
         public DbSet<Answers> Answers { get; set; }
-        public DbSet<Profit> Profit { get; set; }
         public DbSet<Asset> Assets { get; set; }
 
     }

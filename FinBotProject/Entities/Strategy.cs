@@ -10,6 +10,5 @@ namespace WebApi.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string StrategyOSEngine { get; set; }
-        public virtual ICollection<Profit> Profit { get; set;}
     }
 }

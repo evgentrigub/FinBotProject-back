@@ -1,4 +1,5 @@
 ﻿using System;
+using WebApi.Entities;
 using WebApi.Interfaces.Enums;
 
 namespace WebApi.Interfaces.IViewModels

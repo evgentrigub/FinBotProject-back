@@ -13,6 +13,7 @@ namespace WebApi.Services
         User GetById(int id);
         User Create(User user, string password);
         User UpdateAccount(User user);
+        User UpdateInvestorType(User user);
         void Update(User user, string password = null);
         void Delete(int id);
     }
@@ -134,8 +135,23 @@ namespace WebApi.Services
             {
                 throw new Exception(ex.Message);
             }
+        }
 
-
+        //Метод обновления риск профиля инвестора
+        public User UpdateInvestorType(User user)
+        {
+            try
+            {
+                var currentUser = _context.Users.Where(r => r.Id == user.Id).SingleOrDefault();
+                currentUser.RiskType = user.RiskType;
+                _context.Users.Update(currentUser);
+                _context.SaveChanges();
+                return (currentUser);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         // private helper methods

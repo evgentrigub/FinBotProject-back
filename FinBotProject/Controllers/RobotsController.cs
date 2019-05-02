@@ -58,13 +58,9 @@ namespace WebApi.Controllers
                     FinancialInstrument = r.FinancialInstrument,
                     TimeFrame = r.TimeFrame,
                     Strategy = r.Strategy?.Name,
-                    Profit =  new Profit
-                    {
-                        Asset = r.Profit.Asset,
-                        Percentage = r.Profit.Percentage
-                    },
+                    Profit = r.Profit,
                     WorkedTime = (DateTime.Now - r.CreatedDate).Days,
-                });
+                }).ToList();
                 return tradingBots;
             }
             catch (Exception ex)

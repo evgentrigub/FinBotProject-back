@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces.Enums;
+using WebApi.Services;
 
 ///<summary> Контроллер для работы с тестом для определения типа трейдера </summary>
 
@@ -16,9 +19,12 @@ namespace WebApi.Controllers
     public class TaskController : ControllerBase
     {
         private readonly DataContext _context;
-
-        public TaskController(DataContext context)
+        private IUserService _userService;
+        public TaskController(
+            DataContext context,
+            IUserService userService)
         {
+            _userService = userService;
             _context = context;
         }
 
@@ -41,39 +47,48 @@ namespace WebApi.Controllers
             }
         }
 
-        public RiskType GetInvestorType(int ball)
+        //Метод принимает в себя объект пользователя и количество баллов за тест, которые нужно конвертировать в тип инвестора. После этого обновляет БД
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult GetInvestorType(JObject stuff)
         {
             try
             {
+                var obj = stuff["user"].ToObject<User>();
+                var balls = stuff["balls"].ToObject<int>();
                 var type = RiskType.Moderate;
-                switch (ball) 
+                switch (balls) 
                 {
                     case int n when ( n <= 71 ):
                         type = RiskType.Guaranteed;
-                        return type;
+                        break;
                     case int n when ( n > 71 && n <= 106):
                         type = RiskType.Conservative;
-                        return type;
+                        break;
                     case int n when (n > 106 && n <= 142):
                         type = RiskType.Moderate;
-                        return type;
+                        break;
                     case int n when (n > 142 && n <= 182):
                         type = RiskType.Growth;
-                        return type;
+                        break;
                     case int n when (n > 182 && n <= 221):
                         type = RiskType.AggressiveGrowth;
-                        return type;
+                        break;
                     case int n when (n >221):
                         type = RiskType.MaximumGrowth;
-                        return type;
+                        break;
                 }
-                return type;
+                obj.RiskType = type;
+                _userService.UpdateInvestorType(obj);
+                return Ok();
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
+        //private IActionResult _UpdateData()
         // GET: api/values
         //[HttpGet]
         //public IEnumerable<string> Get()

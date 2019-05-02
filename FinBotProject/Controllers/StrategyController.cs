@@ -37,8 +37,7 @@ namespace WebApi.Controllers
                     CreatedDate = r.CreatedDate,
                     Description = r.Description,
                     IsActive = r.IsActive,
-                    StrategyOSEngine = r.StrategyOSEngine,
-                    Profit = r.Profit 
+                    StrategyOSEngine = r.StrategyOSEngine
                 }).ToList();
                 return strategies;
             }

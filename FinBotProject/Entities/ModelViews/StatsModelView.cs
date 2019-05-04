@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Razor.Runtime.TagHelpers;
-using Microsoft.AspNetCore.Razor.TagHelpers;
+using WebApi.Interfaces.Enums;
 
 namespace WebApi.Entities.ModelViews
 {
-    // You may need to install the Microsoft.AspNetCore.Razor.Runtime package into your project
-    [HtmlTargetElement("tag-name")]
-    public class StatsModel : TagHelper
+    public class StatsModelView
     {
-        public override void Process(TagHelperContext context, TagHelperOutput output)
-        {
-
-        }
+        /// <summary> Общая сумма доходности за все время регистрации </summary>
+        public double Profit { get; set; }
+        /// <summary> Денежная сумма на счету </summary>
+        public double Account { get; set; }
+        /// <summary> Риск профиль пользователя /// </summary>
+        public RiskType RiskType { get; set; }
+        ///<summary> Количество роботов у пользователя ///</summary>
+        public int RobotsQuantity { get; set; }
     }
 }

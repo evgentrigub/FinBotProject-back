@@ -124,6 +124,7 @@ namespace WebApi.Controllers
         public IActionResult GetUserById(int id)
         {
             var user = _userService.GetById(id);
+            //var robotsQuantity = user.TradingBots.Count;
             return Ok(user);
         }
 

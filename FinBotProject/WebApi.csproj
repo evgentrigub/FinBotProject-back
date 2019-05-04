@@ -16,6 +16,7 @@
     <Compile Remove="Interfaces\IUsersBots.cs" />
     <Compile Remove="Interfaces\IProfit.cs" />
     <Compile Remove="Entities\Profit.cs" />
+    <Compile Remove="Entities\ModelViews\StatsModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />

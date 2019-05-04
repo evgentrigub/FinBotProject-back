@@ -29,14 +29,18 @@ namespace OsEngine.Robots.Trend
             _momentum_less.Save();
 
             //параметры для моментума 
-            _isOn = CreateParameter("IsOn", false);
-            _volume = CreateParameter("Volume", 0.1m, 0.1m, 5, 0.1m);
+            _isOn = CreateParameter("IsOn", true);
+            _volume = CreateParameter("Volume", 30, 1, 30, 0.5m);
             _length_mom_more = CreateParameter("Length  Momentum_More", 1, 1, 60, 1);
             _length_mom_less = CreateParameter("Length  Momentum_Less", 1, 1, 30, 1);
 
             _tabToTrade.CandleFinishedEvent += _tabToTrade_CandleFinishedEvent;
 
             ParametrsChangeByUser += MomentumMultiTimeframe_ParametrsChangeByUser;
+
+            _stopLoss.High = 0;
+            _stopLoss.Low = 1000000;
+
         }
 
         private void MomentumMultiTimeframe_ParametrsChangeByUser()
@@ -58,6 +62,8 @@ namespace OsEngine.Robots.Trend
         private StrategyParameterInt _length_mom_more;
         private StrategyParameterInt _length_mom_less;
 
+        private Candle _stopLoss = new Candle();
+
         public override string GetNameStrategyType()
         {
             return "MMT_Test";
@@ -71,6 +77,7 @@ namespace OsEngine.Robots.Trend
         //логика торговли
         private void _tabToTrade_CandleFinishedEvent(List<Candle> candles)
         {
+
             if (_isOn.ValueBool == false)
             {
                 return;
@@ -86,25 +93,56 @@ namespace OsEngine.Robots.Trend
                 return;
             }
 
+            //var directionUp = _momentum_less.Values[_momentum_less.Values.Count - 1] >
+            //            _momentum_less.Values[_momentum_less.Values.Count - 2] &&
+            //            _momentum_more.Values[_momentum_more.Values.Count - 1] >
+            //            _momentum_more.Values[_momentum_more.Values.Count - 2];
+
+            //var directionDown = _momentum_less.Values[_momentum_less.Values.Count - 1] <
+            //       _momentum_less.Values[_momentum_less.Values.Count - 2] &&
+            //       _momentum_more.Values[_momentum_more.Values.Count - 1] <
+            //       _momentum_more.Values[_momentum_more.Values.Count - 2];
+
+            var directionUp = _momentum_less.Values[_momentum_less.Values.Count - 2] >
+                        _momentum_less.Values[_momentum_less.Values.Count - 3] &&
+                        _momentum_more.Values[_momentum_more.Values.Count - 2] >
+                        _momentum_more.Values[_momentum_more.Values.Count - 3] &&
+                        _momentum_less.Values[_momentum_less.Values.Count - 1] >
+                        _momentum_less.Values[_momentum_less.Values.Count - 2] &&
+                        _momentum_more.Values[_momentum_more.Values.Count - 1] >
+                        _momentum_more.Values[_momentum_more.Values.Count - 2];
+
+            var directionDown = _momentum_less.Values[_momentum_less.Values.Count - 2] <
+                   _momentum_less.Values[_momentum_less.Values.Count - 3] &&
+                   _momentum_more.Values[_momentum_more.Values.Count - 2] <
+                   _momentum_more.Values[_momentum_more.Values.Count - 3] &&
+                   _momentum_less.Values[_momentum_less.Values.Count - 1] <
+                   _momentum_less.Values[_momentum_less.Values.Count - 2] &&
+                   _momentum_more.Values[_momentum_more.Values.Count - 1] <
+                   _momentum_more.Values[_momentum_more.Values.Count - 2];
+
+
             List<Position> positions = _tabToTrade.PositionsOpenAll;
+            var _lastCandle = candles[candles.Count - 1];
 
             if (positions.Count == 0)
             {
-                // определяем бычий тренд
-                if(_momentum_less.Values[_momentum_less.Values.Count - 1] > 
-                    _momentum_less.Values[_momentum_less.Values.Count - 2] &&
-                    _momentum_more.Values[_momentum_more.Values.Count - 1] >
-                    _momentum_more.Values[_momentum_more.Values.Count - 2])
+                if (directionUp)
                 {
-                    _tabToTrade.BuyAtMarket(_volume.ValueDecimal);
+                    if (candles[candles.Count - 1].High > candles[candles.Count - 2].High)
+                    {
+                        _tabToTrade.BuyAtMarket(_volume.ValueDecimal);
+                        _stopLoss.Low = _lastCandle.Low;
+                    }
                 }
 
-                if (_momentum_less.Values[_momentum_less.Values.Count - 1] <
-                    _momentum_less.Values[_momentum_less.Values.Count - 2] &&
-                    _momentum_more.Values[_momentum_more.Values.Count - 1] <
-                    _momentum_more.Values[_momentum_more.Values.Count - 2])
+                if (directionDown)
                 {
-                    _tabToTrade.SellAtMarket(_volume.ValueDecimal);
+                    if (candles[candles.Count - 1].Low > candles[candles.Count - 2].Low)
+                    {
+                        _tabToTrade.SellAtMarket(_volume.ValueDecimal);
+                        _stopLoss.High = _lastCandle.High;
+                    }
                 }
             }
 
@@ -115,10 +153,7 @@ namespace OsEngine.Robots.Trend
                     return;
                 }
 
-                if (_momentum_less.Values[_momentum_less.Values.Count - 1] <
-                    _momentum_less.Values[_momentum_less.Values.Count - 2] &&
-                    _momentum_more.Values[_momentum_more.Values.Count - 1] <
-                    _momentum_more.Values[_momentum_more.Values.Count - 2])
+                if (directionDown || _lastCandle.Low >= _stopLoss.Low)
                 {
                     _tabToTrade.CloseAllAtMarket();
                     //_tabToTrade.SellAtMarket(_volume.ValueDecimal);
@@ -132,10 +167,7 @@ namespace OsEngine.Robots.Trend
                     return;
                 }
 
-                if (_momentum_less.Values[_momentum_less.Values.Count - 1] >
-                    _momentum_less.Values[_momentum_less.Values.Count - 2] &&
-                    _momentum_more.Values[_momentum_more.Values.Count - 1] >
-                    _momentum_more.Values[_momentum_more.Values.Count - 2])
+                if (directionUp || _lastCandle.High >= _stopLoss.High)
                 {
                     _tabToTrade.CloseAllAtMarket();
                     //_tabToTrade.BuyAtMarket(_volume.ValueDecimal);

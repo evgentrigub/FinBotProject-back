@@ -69,18 +69,60 @@ namespace WebApi.Controllers
             }
         }
 
+        /** Метод создания торгового робота */
+        [HttpPost]
+        public TradingBot CreateBot (TradingBot bot, int id)
+        {
+            try
+            {
+                var user = _context.Users.Where(r => r.Id == id).SingleOrDefault();
+                if (user == null)
+                {
+                    throw new Exception("Пользователь не найден");
+                };
+                if (bot == null)
+                {
+                    throw new Exception("Объект робота пуст");
+                };
+                return new TradingBot
+                {
+                    Name = bot.Name,
+                    Description = bot.Description,
+                    Type = bot.Type,
+                    Profit = 0,
+                    Strategy = bot.Strategy,
+                    Assets = bot.Assets,
+                    TimeFrame = bot.TimeFrame,
+                    FinancialInstrument = bot.FinancialInstrument
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         /** Метод редактирования роботов пользователем */
         [HttpPost]
-        public void UpdateBot (TradingBot bot)
+        public IActionResult UpdateBot (TradingBot bot)
         {
-            var oldBot = _context.TradingBots.Where(r => r.IsActive && r.Id == bot.Id).SingleOrDefault();
-            if (oldBot == null)
+            try
             {
-                throw new Exception("Bot not found");
-            };
-            oldBot.Name = bot.Name;
-            _context.TradingBots.Update(oldBot);
-            _context.SaveChanges();
+                var oldBot = _context.TradingBots.Where(r => r.IsActive && r.Id == bot.Id).SingleOrDefault();
+                if (oldBot == null)
+                {
+                    throw new Exception("Bot not found");
+                };
+                oldBot.Name = bot.Name;
+                _context.TradingBots.Update(oldBot);
+                _context.SaveChanges();
+                return Ok(bot);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
     }
 }

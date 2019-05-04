@@ -38,7 +38,7 @@ namespace WebApi.Controllers
                     Description = r.Description,
                     IsActive = r.IsActive,
                     StrategyOSEngine = r.StrategyOSEngine
-                }).ToList();
+                }).Where(r => r.IsActive).ToList();
                 return strategies;
             }
             catch (Exception ex)

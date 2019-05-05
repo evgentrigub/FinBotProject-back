@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Interfaces.Enums;
 using WebApi.Services;
 
 // Контроллер для работы с бумагами
@@ -39,7 +40,18 @@ namespace WebApi.Controllers
             }
         }
 
-
+        public IEnumerable<Asset> GetAssetsByIndustry(Industry industry)
+        {
+            try
+            {
+                var assets = _context.Assets.Where(r => r.IsActive && r.Industry == industry).ToList();
+                return assets;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
     }
 

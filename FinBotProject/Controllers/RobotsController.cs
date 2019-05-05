@@ -71,30 +71,37 @@ namespace WebApi.Controllers
 
         /** Метод создания торгового робота */
         [HttpPost]
-        public TradingBot CreateBot (TradingBot bot, int id)
+        public IResponse CreateBot (TradingBot bot, int id)
         {
             try
             {
                 var user = _context.Users.Where(r => r.Id == id).SingleOrDefault();
                 if (user == null)
                 {
-                    throw new Exception("Пользователь не найден");
+                    return new Response { IsSuccess = false, Message = "Пользователь не найден"};
                 };
                 if (bot == null)
                 {
-                    throw new Exception("Объект робота пуст");
+                    return new Response { IsSuccess = false, Message = "Объект робота пуст" };
                 };
-                return new TradingBot
+                var newTradingBot = new TradingBot
                 {
+                    Id = new Guid(),
+                    User = user,
                     Name = bot.Name,
-                    Description = bot.Description,
-                    Type = bot.Type,
+                    //Type = bot.Type,
+                    Sum = bot.Sum,
                     Profit = 0,
                     Strategy = bot.Strategy,
-                    Assets = bot.Assets,
-                    TimeFrame = bot.TimeFrame,
-                    FinancialInstrument = bot.FinancialInstrument
+                    //Assets = bot.Assets,
+                    //TimeFrame = bot.TimeFrame,
+                    FinancialInstrument = bot.FinancialInstrument,
+                    CreatedDate = DateTime.Now,
+                    ESValue = bot?.ESValue != 0 ? bot.ESValue : 10
                 };
+                _context.TradingBots.Add(newTradingBot);
+                _context.SaveChanges();
+                return new Response { IsSuccess = true };
             }
             catch (Exception ex)
             {

@@ -8,13 +8,17 @@ namespace WebApi.Interfaces
     {
         ///<summary>Название робота</summary>
         string Name { get; set; }
-        /// <summary>Gets or sets the description</summary>
-        string Description { get; set; }
+        /// <summary> Пользователь </summary>
+        User User { get; set; }
         ///<summary> Тип </summary>
         string Type { get; set; }
         ///<summary> Идентификатор торгового горизонта</summary>
         TimeFrame TimeFrame { get; set; }
         ///<summary> Идентификатор стратегии</summary>
         Strategy Strategy { get; set; }
+        ///<summary> Ожидаемая доходность </summary>
+        double ESValue { get; set; }
+        //<summary> Денежная сумма на бота </summary>
+        int Sum { get; set; }
     }
 }

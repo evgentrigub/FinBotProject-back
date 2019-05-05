@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Helpers;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190505091141_13")]
+    partial class _13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,31 +52,13 @@ namespace WebApi.Migrations
 
                     b.Property<string>("Name");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Assets");
-                });
-
-            modelBuilder.Entity("WebApi.Entities.BotsAssets", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("AssetId");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<bool>("IsActive");
-
                     b.Property<Guid?>("TradingBotId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssetId");
-
                     b.HasIndex("TradingBotId");
 
-                    b.ToTable("BotsAssets");
+                    b.ToTable("Assets");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Questions", b =>
@@ -187,14 +171,10 @@ namespace WebApi.Migrations
                         .HasForeignKey("QuestionsId");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.BotsAssets", b =>
+            modelBuilder.Entity("WebApi.Entities.Asset", b =>
                 {
-                    b.HasOne("WebApi.Entities.Asset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId");
-
-                    b.HasOne("WebApi.Entities.TradingBot", "TradingBot")
-                        .WithMany()
+                    b.HasOne("WebApi.Entities.TradingBot")
+                        .WithMany("Assets")
                         .HasForeignKey("TradingBotId");
                 });
 

@@ -36,6 +36,7 @@ namespace WebApi.Controllers
                     Name = r.Name,
                     CreatedDate = r.CreatedDate,
                     Description = r.Description,
+                    Photo = r.Photo,
                     IsActive = r.IsActive,
                     StrategyOSEngine = r.StrategyOSEngine
                 }).Where(r => r.IsActive).ToList();

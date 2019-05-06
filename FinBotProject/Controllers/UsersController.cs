@@ -102,6 +102,7 @@ namespace WebApi.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()
         {

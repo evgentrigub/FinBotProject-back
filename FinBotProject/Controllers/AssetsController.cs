@@ -40,6 +40,7 @@ namespace WebApi.Controllers
             }
         }
 
+        //Получение бумаги по индустрии
         public IEnumerable<Asset> GetAssetsByIndustry(Industry industry)
         {
             try

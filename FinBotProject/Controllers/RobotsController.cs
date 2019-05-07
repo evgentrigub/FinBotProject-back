@@ -60,7 +60,7 @@ namespace WebApi.Controllers
                     Type = r.Type,
                     FinancialInstrument = r.FinancialInstrument,
                     TimeFrame = r.TimeFrame,
-                    Strategy = r.Strategy?.Name,
+                    Strategy = r.Strategy,
                     Profit = r.Profit,
                     WorkedTime = (DateTime.Now - r.CreatedDate).Days,
                 }).ToList();

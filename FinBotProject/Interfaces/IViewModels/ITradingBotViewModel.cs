@@ -10,7 +10,7 @@ namespace WebApi.Interfaces.IViewModels
         string Type { get; set; }
         FinancialInstrument FinancialInstrument { get; set; }
         TimeFrame TimeFrame { get; set; }
-        string Strategy { get; set; }
+        Strategy Strategy { get; set; }
         double Profit { get; set; }
     }
 }

@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Authorization;
 using WebApi.Services;
 using WebApi.Dtos;
 using WebApi.Entities;
+using WebApi.Entities.ModelViews;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Controllers
 {
@@ -22,16 +25,19 @@ namespace WebApi.Controllers
     {
         private IUserService _userService;
         private IMapper _mapper;
+        private DataContext _context;
         private readonly AppSettings _appSettings;
 
         public UsersController(
             IUserService userService,
             IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings,
+            DataContext context)
         {
             _userService = userService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
+            _context = context;
         }
 
         [AllowAnonymous]
@@ -124,9 +130,17 @@ namespace WebApi.Controllers
         [HttpGet("stat/{id}")]
         public IActionResult GetUserById(int id)
         {
-            var user = _userService.GetById(id);
+            var user = _context.Users.Where(r => r.Id == id).Include(a => a.TradingBots).SingleOrDefault();
+           //var user = _userService.GetById(id);
             //var robotsQuantity = user.TradingBots.Count;
-            return Ok(user);
+            var userStats = new StatsModelView()
+            {
+                Profit = user.Profit,
+                RiskType = user.RiskType,
+                Account = user.Account,
+                RobotsQuantity = user.TradingBots.Count
+            };
+            return Ok(userStats);
         }
 
         [HttpPut("{id}")]

@@ -49,7 +49,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                var user = _context.Users.Where(r => r.Id == id).Include(a => a.TradingBots).SingleOrDefault();
+                var user = _context.Users.Where(r => r.Id == id)
+                    .Include(a => a.TradingBots)
+                    .ThenInclude(tb => tb.Strategy)
+                    .SingleOrDefault();
                 var tradingBots = user.TradingBots.Select(r => new TradingBotViewModel
                 {
                     Id = r.Id,

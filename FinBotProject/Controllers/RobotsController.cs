@@ -124,6 +124,7 @@ namespace WebApi.Controllers
                     throw new Exception("Bot not found");
                 };
                 oldBot.Name = bot.Name;
+                oldBot.IsActive = bot.IsActive;
                 _context.TradingBots.Update(oldBot);
                 _context.SaveChanges();
                 return Ok(bot);

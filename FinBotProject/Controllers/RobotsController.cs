@@ -74,14 +74,14 @@ namespace WebApi.Controllers
 
         /** Метод создания торгового робота */
         [HttpPost]
-        public IResponse CreateBot (TradingBot bot, int id)
+        public IResponse CreateBot(TradingBot bot, int id)
         {
             try
             {
                 var user = _context.Users.Where(r => r.Id == id).SingleOrDefault();
                 if (user == null)
                 {
-                    return new Response { IsSuccess = false, Message = "Пользователь не найден"};
+                    return new Response { IsSuccess = false, Message = "Пользователь не найден" };
                 };
                 if (bot == null)
                 {
@@ -114,11 +114,11 @@ namespace WebApi.Controllers
 
         /** Метод редактирования роботов пользователем */
         [HttpPost]
-        public IActionResult UpdateBot (TradingBot bot)
+        public IActionResult UpdateBot(TradingBot bot)
         {
             try
             {
-                var oldBot = _context.TradingBots.Where(r => r.IsActive && r.Id == bot.Id).SingleOrDefault();
+                var oldBot = _context.TradingBots.Where(r => r.Id == bot.Id).SingleOrDefault();
                 if (oldBot == null)
                 {
                     throw new Exception("Bot not found");
@@ -135,5 +135,28 @@ namespace WebApi.Controllers
             }
 
         }
+
+        /** Метод удаления роботов пользователем */
+        [HttpPost]
+        public IActionResult DeleteBot(TradingBot bot)
+        {
+            try
+            {
+                var botForDelete = _context.TradingBots.Where(r => r.Id == bot.Id).SingleOrDefault();
+                if (botForDelete == null)
+                {
+                    throw new Exception("Bot not found");
+                };
+                _context.TradingBots.Remove(botForDelete);
+                _context.SaveChanges();
+                return Ok(bot);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
     }
 }

@@ -9,6 +9,7 @@ using WebApi.Entities;
 using WebApi.Entities.ModelViews;
 using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Interfaces.Enums;
 using WebApi.Interfaces.IViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -158,5 +159,19 @@ namespace WebApi.Controllers
 
         }
 
+        /** Метод отображения активов для выбора в создании робота */
+        [HttpGet]
+        public IEnumerable<Asset> GetAssetsByFinancialInstrumentAndIndustry(FinancialInstrument fi, Industry ind)
+        {
+            try
+            {
+                var assets = _context.Assets.Where(r => r.FinancialInstrument == fi && r.Industry == ind).ToList();
+                return assets;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

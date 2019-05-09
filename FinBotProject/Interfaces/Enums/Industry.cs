@@ -3,6 +3,10 @@ namespace WebApi.Interfaces.Enums
 {
     public enum Industry
     {
+        /// <summary>
+        /// Для не assets
+        /// </summary>
+        Other = 0,
         /// <summary> Информационные технологии /// </summary>
         IT = 1,
         /// <summary>  Здравоохранение /// </summary>

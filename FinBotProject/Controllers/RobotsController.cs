@@ -30,7 +30,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ITradibgBot> GetAllRobots()
+        public IEnumerable<ITradingBot> GetAllRobots()
         {
             try
             {
@@ -58,7 +58,7 @@ namespace WebApi.Controllers
                     Id = r.Id,
                     Name = r.Name,
                     Type = r.Type,
-                    FinancialInstrument = r.FinancialInstrument,
+                    //FinancialInstrument = r.FinancialInstrument,
                     TimeFrame = r.TimeFrame,
                     Strategy = r.Strategy,
                     Profit = r.Profit,
@@ -98,7 +98,7 @@ namespace WebApi.Controllers
                     Strategy = bot.Strategy,
                     //Assets = bot.Assets,
                     //TimeFrame = bot.TimeFrame,
-                    FinancialInstrument = bot.FinancialInstrument,
+                    //FinancialInstrument = bot.FinancialInstrument,
                     CreatedDate = DateTime.Now,
                     ESValue = bot?.ESValue != 0 ? bot.ESValue : 10
                 };

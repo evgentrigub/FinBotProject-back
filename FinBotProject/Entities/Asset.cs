@@ -8,5 +8,6 @@ namespace WebApi.Entities
     {
         public string Name { get; set; }
         public Industry Industry { get; set; }
+        public FinancialInstrument FinancialInstrument { get; set; }
     }
 }

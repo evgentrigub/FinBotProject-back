@@ -7,5 +7,6 @@ namespace WebApi.Interfaces
     {
         string Name { get; set; }
         Industry Industry { get; set; }
+        FinancialInstrument FinancialInstrument { get; set; }
     }
 }

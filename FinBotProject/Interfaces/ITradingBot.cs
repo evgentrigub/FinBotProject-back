@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using WebApi.Entities;
 using WebApi.Interfaces.Enums;
 
 namespace WebApi.Interfaces
 {
-    public interface ITradibgBot : IModelBase<Guid>
+    public interface ITradingBot : IModelBase<Guid>
     {
         ///<summary>Название робота</summary>
         string Name { get; set; }

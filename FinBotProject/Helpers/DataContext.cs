@@ -17,4 +17,5 @@ namespace WebApi.Helpers
         public DbSet<Asset> Assets { get; set; }
         public DbSet<BotsAssets> BotsAssets { get; set; }
     }
+
 }

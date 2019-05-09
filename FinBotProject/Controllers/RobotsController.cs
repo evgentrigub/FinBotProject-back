@@ -63,6 +63,7 @@ namespace WebApi.Controllers
                     TimeFrame = r.TimeFrame,
                     Strategy = r.Strategy,
                     Profit = r.Profit,
+                    IsActive = r.IsActive,
                     WorkedTime = (DateTime.Now - r.CreatedDate).Days,
                 }).ToList();
                 return tradingBots;

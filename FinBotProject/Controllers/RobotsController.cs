@@ -49,7 +49,7 @@ namespace WebApi.Controllers
         public IEnumerable<ITradingBotViewModel> GetUserRobots(int id)
         {
             try
-            {
+            { 
                 var user = _context.Users.Where(r => r.Id == id)
                     .Include(a => a.TradingBots)
                     .ThenInclude(tb => tb.Strategy)
@@ -59,7 +59,6 @@ namespace WebApi.Controllers
                     Id = r.Id,
                     Name = r.Name,
                     Type = r.Type,
-                    //FinancialInstrument = r.FinancialInstrument,
                     TimeFrame = r.TimeFrame,
                     Strategy = r.Strategy,
                     Profit = r.Profit,
@@ -67,6 +66,21 @@ namespace WebApi.Controllers
                     WorkedTime = (DateTime.Now - r.CreatedDate).Days,
                 }).ToList();
                 return tradingBots;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /** Метод для отображение бумаги для диалога */
+        [HttpGet]
+        public Asset GetDescription(string bot_id)
+        {
+            try
+            {
+                var description = _context.BotsAssets.Where(r => r.TradingBot.Id.ToString() == bot_id).Include(r => r.Asset).SingleOrDefault();
+                return description.Asset;
             }
             catch (Exception ex)
             {
@@ -84,6 +98,10 @@ namespace WebApi.Controllers
                 if (user == null)
                 {
                     return new Response { IsSuccess = false, Message = "Пользователь не найден" };
+                };
+                if (user.TradingBots.Count > 10)
+                {
+                    return new Response { IsSuccess = false, Message = "Превышено максимальное количество роботов" };
                 };
                 if (bot == null)
                 {

@@ -97,6 +97,10 @@ namespace WebApi.Controllers
         [HttpPut("addMoney/{id}")]
         public IActionResult AddMoneyToAccount(User user)
         {
+            if (user.Account < 0)
+            {
+                return BadRequest(new { message = "Неккоректно заполнено поле" });
+            }
             try
             {
                 _userService.UpdateAccount(user);

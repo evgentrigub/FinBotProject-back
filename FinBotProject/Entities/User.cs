@@ -12,8 +12,6 @@ namespace WebApi.Entities
         public string LastName { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
-        /// <summary> Общая сумма доходности за все время регистрации </summary>
-        public double Profit { get; set; }
         /// <summary> Денежная сумма на счету </summary>
         public double Account { get; set; }
         /// <summary> Риск профиль пользователя /// </summary>

@@ -135,11 +135,9 @@ namespace WebApi.Controllers
         public IActionResult GetUserById(int id)
         {
             var user = _context.Users.Where(r => r.Id == id).Include(a => a.TradingBots).SingleOrDefault();
-           //var user = _userService.GetById(id);
-            //var robotsQuantity = user.TradingBots.Count;
             var userStats = new StatsModelView()
             {
-                Profit = user.Profit,
+                Profit = user.TradingBots.Sum(r => r.Profit),
                 RiskType = user.RiskType,
                 Account = user.Account,
                 RobotsQuantity = user.TradingBots.Count

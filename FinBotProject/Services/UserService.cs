@@ -48,7 +48,7 @@ namespace WebApi.Services
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users.OrderByDescending(r => r.Profit);
+            return _context.Users;
         }
 
         public User GetById(int id)

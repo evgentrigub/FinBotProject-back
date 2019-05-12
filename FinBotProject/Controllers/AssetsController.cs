@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         private IUserService _userService;
         public AssetsController(
             DataContext context,
-            IUserService userService)
+            IUserService userService)                                                                                                                                                   
         {
             _userService = userService;
             _context = context;

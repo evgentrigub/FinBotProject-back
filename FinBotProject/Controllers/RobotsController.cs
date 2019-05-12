@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using WebApi.Entities;
 using WebApi.Entities.ModelViews;
 using WebApi.Helpers;
@@ -49,7 +50,7 @@ namespace WebApi.Controllers
         public IEnumerable<ITradingBotViewModel> GetUserRobots(int id)
         {
             try
-            { 
+            {
                 var user = _context.Users.Where(r => r.Id == id)
                     .Include(a => a.TradingBots)
                     .ThenInclude(tb => tb.Strategy)
@@ -59,6 +60,7 @@ namespace WebApi.Controllers
                     Id = r.Id,
                     Name = r.Name,
                     Type = r.Type,
+                    //FinancialInstrument = r.FinancialInstrument,
                     TimeFrame = r.TimeFrame,
                     Strategy = r.Strategy,
                     Profit = r.Profit,
@@ -73,35 +75,18 @@ namespace WebApi.Controllers
             }
         }
 
-        /** Метод для отображение бумаги для диалога */
-        [HttpGet]
-        public Asset GetDescription(string bot_id)
-        {
-            try
-            {
-                var description = _context.BotsAssets.Where(r => r.TradingBot.Id.ToString() == bot_id).Include(r => r.Asset).SingleOrDefault();
-                return description.Asset;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
         /** Метод создания торгового робота */
         [HttpPost]
-        public IResponse CreateBot(TradingBot bot, int id)
+        public IResponse CreateBot (JObject stuff)
         {
             try
             {
+                var bot = stuff["bot"].ToObject<TradingBot>();
+                var id = stuff["id"].ToObject<int>();
                 var user = _context.Users.Where(r => r.Id == id).SingleOrDefault();
                 if (user == null)
                 {
                     return new Response { IsSuccess = false, Message = "Пользователь не найден" };
-                };
-                if (user.TradingBots.Count > 10)
-                {
-                    return new Response { IsSuccess = false, Message = "Превышено максимальное количество роботов" };
                 };
                 if (bot == null)
                 {
@@ -184,7 +169,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                var assets = _context.Assets.Where(r => r.FinancialInstrument == fi && r.Industry == ind).ToList();
+                var assets = _context.Assets.Where(r => r.FinancialInstrument==fi && r.Industry==ind).ToList();
                 return assets;
             }
             catch (Exception ex)

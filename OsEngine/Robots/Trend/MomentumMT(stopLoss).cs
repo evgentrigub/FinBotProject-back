@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace OsEngine.Robots.Trend
 {
-    class MomentumMultiTimeframe : BotPanel
+    class MomentumMT_StopLoss : BotPanel
     {
-        public MomentumMultiTimeframe(string name, StartProgram startProgram) : base(name, startProgram)
+        public MomentumMT_StopLoss(string name, StartProgram startProgram) : base(name, startProgram)
         {
             // вкладка для торговли
             TabCreate(BotTabType.Simple);
@@ -29,7 +29,7 @@ namespace OsEngine.Robots.Trend
             _momentum_less.Save();
 
             //параметры для моментума 
-            _isOn = CreateParameter("IsOn", true);
+            _isOn = CreateParameter("IsOn", false);
             _volume = CreateParameter("Volume", 30, 1, 30, 0.5m);
             _length_mom_more = CreateParameter("Length  Momentum_More", 1, 1, 60, 1);
             _length_mom_less = CreateParameter("Length  Momentum_Less", 1, 1, 30, 1);
@@ -66,7 +66,7 @@ namespace OsEngine.Robots.Trend
 
         public override string GetNameStrategyType()
         {
-            return "MMT_Test";
+            return "MMT_StopLoss";
         }
 
         public override void ShowIndividualSettingsDialog()
@@ -92,16 +92,6 @@ namespace OsEngine.Robots.Trend
             {
                 return;
             }
-
-            //var directionUp = _momentum_less.Values[_momentum_less.Values.Count - 1] >
-            //            _momentum_less.Values[_momentum_less.Values.Count - 2] &&
-            //            _momentum_more.Values[_momentum_more.Values.Count - 1] >
-            //            _momentum_more.Values[_momentum_more.Values.Count - 2];
-
-            //var directionDown = _momentum_less.Values[_momentum_less.Values.Count - 1] <
-            //       _momentum_less.Values[_momentum_less.Values.Count - 2] &&
-            //       _momentum_more.Values[_momentum_more.Values.Count - 1] <
-            //       _momentum_more.Values[_momentum_more.Values.Count - 2];
 
             var directionUp = _momentum_less.Values[_momentum_less.Values.Count - 2] >
                         _momentum_less.Values[_momentum_less.Values.Count - 3] &&
@@ -156,7 +146,6 @@ namespace OsEngine.Robots.Trend
                 if (directionDown || _lastCandle.Low >= _stopLoss.Low)
                 {
                     _tabToTrade.CloseAllAtMarket();
-                    //_tabToTrade.SellAtMarket(_volume.ValueDecimal);
                 }
             }
 
@@ -170,7 +159,6 @@ namespace OsEngine.Robots.Trend
                 if (directionUp || _lastCandle.High >= _stopLoss.High)
                 {
                     _tabToTrade.CloseAllAtMarket();
-                    //_tabToTrade.BuyAtMarket(_volume.ValueDecimal);
                 }
             }
         }

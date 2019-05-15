@@ -25,7 +25,10 @@ namespace OsEngine.Robots
             List<string> result = new List<string>();
 
             //добавляем робота в список
-            result.Add("MMT_Test");
+            result.Add("GAP");
+            result.Add("MMT_Pure");
+            result.Add("MMT_StopLoss");
+            result.Add("MMT_MACD");
             result.Add("Arbitrage");
             result.Add("MarketMakerBot");
             result.Add("PatternTrader");
@@ -55,10 +58,24 @@ namespace OsEngine.Robots
         {
             BotPanel bot = null;
             // примеры и бесплатные боты
-
-            if(nameClass == "MMT_Test")
+            if (nameClass == "GAP")
             {
-                bot = new MomentumMultiTimeframe(name, startProgram);
+                bot = new GAP(name, startProgram);
+            }
+
+            if (nameClass == "MMT_Pure")
+            {
+                bot = new MomentumMT_Pure(name, startProgram);
+            }
+
+            if(nameClass == "MMT_StopLoss")
+            {
+                bot = new MomentumMT_StopLoss(name, startProgram);
+            }
+
+            if(nameClass == "MMT_MACD")
+            {
+                bot = new MomentumMT_MACD(name, startProgram);
             }
 
             // если выбираем робота с именем Arbitrage, то создаем класс нашего робота

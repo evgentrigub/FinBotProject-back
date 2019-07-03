@@ -1,4 +1,4 @@
-﻿using System;
+﻿----using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -77,7 +77,7 @@ namespace WebApi.Controllers
 
         /** Метод создания торгового робота */
         [HttpPost]
-        public IResponse CreateBot (JObject stuff)
+        public IResponse CreateBot(JObject stuff)
         {
             try
             {
@@ -169,8 +169,22 @@ namespace WebApi.Controllers
         {
             try
             {
-                var assets = _context.Assets.Where(r => r.FinancialInstrument==fi && r.Industry==ind).ToList();
+                var assets = _context.Assets.Where(r => r.FinancialInstrument == fi && r.Industry == ind).ToList();
                 return assets;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public Asset GetDescription(string bot_id)
+        {
+            try
+            {
+                var description = _context.BotsAssets.Where(r => r.TradingBot.Id.ToString() == bot_id).Include(r => r.Asset).SingleOrDefault();
+                return description.Asset;
             }
             catch (Exception ex)
             {

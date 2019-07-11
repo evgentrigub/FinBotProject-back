@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -16,7 +15,7 @@ namespace WebApi.Controllers
     public class StrategyController : ControllerBase
     {
         /// <summary>
-        /// //внедрение зависимостей для внедрения контекста бд
+        ///     //внедрение зависимостей для внедрения контекста бд
         /// </summary>
         private readonly DataContext _context;
 
@@ -30,8 +29,8 @@ namespace WebApi.Controllers
         {
             try
             {
-                var strategies = _context.Strategy.Select(r => new Strategy 
-                {   
+                var strategies = _context.Strategy.Select(r => new Strategy
+                {
                     Id = r.Id,
                     Name = r.Name,
                     CreatedDate = r.CreatedDate,

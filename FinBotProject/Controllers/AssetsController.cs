@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces.Enums;
@@ -15,13 +13,14 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AssetsController: ControllerBase
+    public class AssetsController : ControllerBase
     {
         private readonly DataContext _context;
         private IUserService _userService;
+
         public AssetsController(
             DataContext context,
-            IUserService userService)                                                                                                                                                   
+            IUserService userService)
         {
             _userService = userService;
             _context = context;
@@ -53,9 +52,5 @@ namespace WebApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
-
     }
-
-   
-
 }

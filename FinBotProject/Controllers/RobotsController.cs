@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using WebApi.Entities;
 using WebApi.Entities.ModelViews;
 using WebApi.Helpers;
@@ -20,7 +20,7 @@ namespace WebApi.Controllers
     public class RobotsController : ControllerBase
     {
         /// <summary>
-        /// //внедрение зависимостей для внедрения контекста бд
+        ///     //внедрение зависимостей для внедрения контекста бд
         /// </summary>
         private readonly DataContext _context;
 
@@ -63,7 +63,7 @@ namespace WebApi.Controllers
                     Strategy = r.Strategy,
                     Profit = r.Profit,
                     IsActive = r.IsActive,
-                    WorkedTime = (DateTime.Now - r.CreatedDate).Days,
+                    WorkedTime = (DateTime.Now - r.CreatedDate).Days
                 }).ToList();
                 return tradingBots;
             }
@@ -82,14 +82,10 @@ namespace WebApi.Controllers
                 var bot = stuff["bot"].ToObject<TradingBot>();
                 var id = stuff["id"].ToObject<int>();
                 var user = _context.Users.Where(r => r.Id == id).SingleOrDefault();
-                if (user == null)
-                {
-                    return new Response { IsSuccess = false, Message = "Пользователь не найден" };
-                };
-                if (bot == null)
-                {
-                    return new Response { IsSuccess = false, Message = "Объект робота пуст" };
-                };
+                if (user == null) return new Response {IsSuccess = false, Message = "Пользователь не найден"};
+                ;
+                if (bot == null) return new Response {IsSuccess = false, Message = "Объект робота пуст"};
+                ;
                 var newTradingBot = new TradingBot
                 {
                     Id = new Guid(),
@@ -107,7 +103,7 @@ namespace WebApi.Controllers
                 };
                 _context.TradingBots.Add(newTradingBot);
                 _context.SaveChanges();
-                return new Response { IsSuccess = true };
+                return new Response {IsSuccess = true};
             }
             catch (Exception ex)
             {
@@ -122,10 +118,8 @@ namespace WebApi.Controllers
             try
             {
                 var oldBot = _context.TradingBots.Where(r => r.Id == bot.Id).SingleOrDefault();
-                if (oldBot == null)
-                {
-                    throw new Exception("Bot not found");
-                };
+                if (oldBot == null) throw new Exception("Bot not found");
+                ;
                 oldBot.Name = bot.Name;
                 oldBot.IsActive = bot.IsActive;
                 _context.TradingBots.Update(oldBot);
@@ -136,7 +130,6 @@ namespace WebApi.Controllers
             {
                 throw new Exception(ex.Message);
             }
-
         }
 
         /** Метод удаления роботов пользователем */
@@ -146,10 +139,8 @@ namespace WebApi.Controllers
             try
             {
                 var botForDelete = _context.TradingBots.Where(r => r.Id == bot.Id).SingleOrDefault();
-                if (botForDelete == null)
-                {
-                    throw new Exception("Bot not found");
-                };
+                if (botForDelete == null) throw new Exception("Bot not found");
+                ;
                 _context.TradingBots.Remove(botForDelete);
                 _context.SaveChanges();
                 return Ok(bot);
@@ -158,7 +149,6 @@ namespace WebApi.Controllers
             {
                 throw new Exception(ex.Message);
             }
-
         }
 
         /** Метод отображения активов для выбора в создании робота */
@@ -181,7 +171,8 @@ namespace WebApi.Controllers
         {
             try
             {
-                var description = _context.BotsAssets.Where(r => r.TradingBot.Id.ToString() == bot_id).Include(r => r.Asset).SingleOrDefault();
+                var description = _context.BotsAssets.Where(r => r.TradingBot.Id.ToString() == bot_id)
+                    .Include(r => r.Asset).SingleOrDefault();
                 return description.Asset;
             }
             catch (Exception ex)

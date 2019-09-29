@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -13,8 +12,8 @@ namespace WebApi.Controllers
         public string Get()
         {
             var curr = Directory.GetCurrentDirectory();
-            var path = Path.GetDirectoryName(curr)+"\\OsEngine\\bin\\Debug\\Result\\william_result.txt";
-            string readText = System.IO.File.ReadAllText(path);
+            var path = Path.GetDirectoryName(curr) + "\\OsEngine\\bin\\Debug\\Result\\william_result.txt";
+            var readText = System.IO.File.ReadAllText(path);
 
             return readText;
         }
